@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Leaflet Map with Path Length</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map { height: 400px; }
+        #path-length { padding: 10px; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="path-length">Path Length: 0 km</div>
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var latlngs = [
+            [45.51, -122.68],
+            [37.77, -122.43],
+            [34.04, -118.2]
+        ];
+
+        var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+        map.fitBounds(polyline.getBounds());
+
+        // 计算路径长度的函数
+        function calculatePathLength(latlngs) {
+            var totalLength = 0;
+            for (var i = 0; i < latlngs.length - 1; i++) {
+                var pointA = L.latLng(latlngs[i]);
+                var pointB = L.latLng(latlngs[i + 1]);
+                var distance = pointA.distanceTo(pointB) / 1000; // 转换为公里
+                totalLength += distance;
+            }
+            return totalLength.toFixed(2); // 保留两位小数
+        }
+
+        // 计算并显示路径长度
+        var pathLength = calculatePathLength(latlngs);
+        document.getElementById('path-length').innerHTML = 'Path Length: ' + pathLength + ' km';
+    </script>
+</body>
+</html>
