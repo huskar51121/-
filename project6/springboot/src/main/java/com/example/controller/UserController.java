@@ -8,6 +8,7 @@ import net.sf.json.JSONObject;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,9 +19,9 @@ import com.example.entity.user;
 import com.example.others.Result;
 import com.example.service.UserService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/userrequest")
-@SpringBootApplication
 public class UserController {
 
 	private final UserService userservice;
@@ -65,18 +66,73 @@ public class UserController {
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("登录失败：" + e.getMessage());
 		}
+	}
 
+	@PostMapping("/changenta")
+	ResponseEntity<String> changenta(String token, String name, String tagline, String avatarurl) {
+		if (token == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		String lastname = UserService.deToken(token);
+
+		if (lastname == "验证失败") {
+			return ResponseEntity.badRequest().build();
+		} else {
+
+			int userid = (int) userservice.getuserbyname(lastname).get("id");
+			String info1 = userservice.changenta(userid, name, tagline, avatarurl);
+			if (info1 == "修改成功") {
+				String token1 = UserService.createToken(name);
+				return ResponseEntity.ok(token1);
+			} else {
+				return ResponseEntity.ok(info1);
+			}
+
+		}
+	}
+
+	@PostMapping("/addgold")
+	ResponseEntity<String> addgold(String token) {
+		if (token == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		String name = UserService.deToken(token);
+
+		if (name == "验证失败") {
+			return ResponseEntity.badRequest().build();
+		} else {
+			int userid = (int) userservice.getuserbyname(name).get("id");
+			String info1 = userservice.addgold(userid);
+			return ResponseEntity.ok(info1);
+		}
+	}
+
+	@PostMapping("/changepassword")
+	ResponseEntity<String> changepassword(String token, String lastpassword, String newpassword) {
+		if (token == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		String name = UserService.deToken(token);
+
+		if (name == "验证失败") {
+			return ResponseEntity.badRequest().build();
+		} else {
+			String result = userservice.login(name, lastpassword);
+			if (result == "登录成功") {
+				int userid = (int) userservice.getuserbyname(name).get("id");
+				return ResponseEntity.ok(userservice.changepassword(userid, newpassword));
+			} else {
+				return ResponseEntity.ok(result);
+			}
+		}
 	}
 
 	// 这是页面用来获取用户信息的，输入用户名，会返回该用户的所有信息，如果没有则返回null，类型是map，返回到网页中会自动变为json
 	@PostMapping("/afterlogin")
 	ResponseEntity<Map<String, Object>> getuserbytoken(String token) {
-		// 在参数出现后删除下面这一行
 		if (token == null) {
 			return ResponseEntity.badRequest().build();
 		}
-		System.out.println(token);
-		System.out.println("6743\n");
 		String name = UserService.deToken(token);
 
 		if (name == "验证失败") {

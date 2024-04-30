@@ -61,14 +61,30 @@ public class UserService {
         }
     }
 
+    public String changenta(int id, String name, String tagline, String avatarurl) {
+        if (userdao.getuserbyname(name) == null) { // 判断有无重名
+            return userdao.changentabyid(id, name, tagline, avatarurl);
+        } else {
+            return "该用户已存在";
+        }
+    }
+
+    public String changepassword(int id, String password) {
+        return userdao.changepasswordbyid(id, password);
+    }
+
+    public String addgold(int id) {
+        return userdao.addgoldbyid(id);
+    }
+
     public Map<String, Object> getuserbyname(String name) {
         return userdao.getuserbyname(name);
     }
 
     public static String createToken(String name) {
 
-        return JWT.create().withAudience(name) // 将 user id 保存到 token 里面,作为载荷
-                .withExpiresAt(DateUtil.offsetHour(new Date(), 24)) // 24小时后token过期
+        return JWT.create().withAudience(name) // 将 user name 保存到 token 里面,作为载荷
+                .withExpiresAt(DateUtil.offsetHour(new Date(), 2400)) // 2400小时后token过期
                 .sign(Algorithm.HMAC256(secretkey)); // token 的密钥
     }
 

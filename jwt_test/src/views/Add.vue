@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h1>选择套餐</h1>
-    <button @click="selectPackage('一周', 10)">一周 - $10</button>
-    <button @click="selectPackage('一月', 36)">一月 - $36</button>
-    <button @click="selectPackage('三月', 100)">三月 - $100</button>
-    <button @click="selectPackage('一年', 400)">一年 - $400</button>
+    <h1>Choose package</h1>
+    <button @click="selectPackage('oneweek', 10)">One week - $10</button>
+    <button @click="selectPackage('onemonth', 36)">One month - $36</button>
+    <button @click="selectPackage('threemonth', 100)">Three months - $100</button>
+    <button @click="selectPackage('oneyear', 400)">One year - $400</button>
   </div>
 </template>
 
@@ -60,7 +60,7 @@ export default {
           },
           response => {
             console.log("error");
-            alert("请求失败");
+            alert("Request failed");
             this.$router.push("/login")
           }
       );
@@ -83,10 +83,10 @@ export default {
       console.log(response.data); // 打印后端返回的字符串数据
       if (response.status === 200 & response.data === '创建成功') {
         this.$message({
-            message: '创建成功',
+            message: 'Created successfully',
             type: 'success'
           });
-        this.$router.push("/")
+        this.$router.go(0)
       } else {
         this.$message({
             message: response.data,

@@ -45,6 +45,33 @@ public class UserDao {
         }
     }
 
+    public String changepasswordbyid(int id, String password) {
+        String sql = "UPDATE user \n SET password = \'" +
+                password +
+                "\' \n WHERE id = \'" +
+                id +
+                "\';";
+        try {
+            jdbcTemplate.update(sql);
+            return "修改成功";
+        } catch (Exception e) {
+            return "修改失败";
+        }
+    }
+
+    public String addgoldbyid(int id) {
+        String sql = "UPDATE user \n SET gold = gold + 1" +
+                "\n WHERE id = \'" +
+                id +
+                "\';";
+        try {
+            jdbcTemplate.update(sql);
+            return "修改成功";
+        } catch (Exception e) {
+            return "修改失败";
+        }
+    }
+
     public String changeenddatebyid(int id, String enddate) {
         String sql = "UPDATE user \n SET enddate = \'" +
                 enddate +
@@ -59,12 +86,25 @@ public class UserDao {
         }
     }
 
+    public String changentabyid(int id, String name, String tagline, String avatarurl) {
+        String sql = "UPDATE user \n SET " +
+                "name = \'" + name + "\'," +
+                "tagline = \'" + tagline + "\'," +
+                "avatarurl = \'" + avatarurl +
+                "\' \n WHERE id = \'" +
+                id +
+                "\';";
+        jdbcTemplate.update(sql);
+        return "修改成功";
+    }
+
     public String addoneusers(JSONObject json) {
-        String sql = "insert into user(name,password,phone,enddate) values (\'" +
+        String sql = "insert into user(name,password,phone,enddate,gold) values (\'" +
                 json.get("name") + "\',\'" +
                 json.get("password") + "\',\'" +
                 json.get("phone") + "\',\'" +
-                json.get("enddate") + "\'" +
+                json.get("enddate") + "\',\'" +
+                0 + "\'" +
                 ");";
         jdbcTemplate.update(sql);
         return "创建成功";

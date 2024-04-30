@@ -3,43 +3,43 @@
     <div class="img_box"></div>
     <el-main class="mainpage">
     <div class="formContainer">
-        <h2 class="title">请注册</h2>
+        <h2 class="title">Register</h2>
         <el-form
           ref="registerForm"
           :model="registerForm"
           status-icon
           class="demo-ruleForm"
         >
-          <el-form-item label="用户名" prop="username" label-width="80px">
+          <el-form-item label="Username" prop="username" label-width="80px">
             <el-input v-model="registerForm.username"
               prefix-icon="el-icon-user" 
-              placeholder="请输入用户名" 
+              placeholder="Entry user name" 
               autocomplete="off" 
             />
           </el-form-item>
-          <el-form-item label="密码" prop="password" label-width="80px">
+          <el-form-item label="Password" prop="password" label-width="80px">
             <el-input
               v-model="registerForm.password"
               type="password"
               show-password
               prefix-icon="el-icon-lock" 
-              placeholder="请输入密码"
+              placeholder="Entry password"
               autocomplete="off"
             />
           </el-form-item>
-          <el-form-item label="电话号" prop="mobile" label-width="80px" :rules="rules.mobile">
+          <el-form-item label="Mobile" prop="mobile" label-width="80px" :rules="rules.mobile">
             <el-input v-model="registerForm.mobile"
               prefix-icon="el-icon-phone" 
-              placeholder="请输入电话号码" 
+              placeholder="Entry mobile number" 
               autocomplete="off" 
             />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="registerSubmitForm()"
-              >注册</el-button
+              >Register</el-button
             >
             <el-button @click="goLogin()"
-              >返回登录</el-button
+              >Go login</el-button
             >
           </el-form-item>
           
@@ -74,7 +74,7 @@ export default {
             callback()
           } else {
             this.$message({
-              message: '电话号码格式不正确，请输入中国大陆手机号',
+              message: 'Please enter the phone number in Chinese Mainland',
               type: 'error'
             });
           }
@@ -103,21 +103,21 @@ export default {
     registerSubmitForm() {
     if (this.registerForm.username === '') {
       this.$message({
-            message: '用户名不能为空',
+            message: 'The username cannot be empty',
             type: 'error'
           });
       return;
     }
     if (this.registerForm.password === '') {
       this.$message({
-            message: '密码不能为空',
+            message: 'Password cannot be empty',
             type: 'error'
           });
       return;
     }
     if (this.registerForm.mobile === '') {
       this.$message({
-            message: '电话号码不能为空',
+            message: 'Phone number cannot be empty',
             type: 'error'
           });
       return;
@@ -134,7 +134,7 @@ export default {
         console.log(response); // 打印后端返回的字符串数据
         if (response.data == "创建成功") {
           this.$message({
-            message: '创建成功',
+            message: 'Created successfully',
             type: 'success'
           });
           //跳转登录路由

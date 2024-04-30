@@ -3,36 +3,36 @@
     <div class="img_box"></div>
     <el-main class="mainpage">
         <div class="formContainer">
-            <h2 class="title">请登录</h2>
+            <h2 class="title">Login</h2>
             <el-form
               ref="loginFormRef"
               :model="loginForm"
               status-icon
               class="demo-ruleForm"
             >
-              <el-form-item label="用户名" prop="username" label-width="80px">
+              <el-form-item label="Username" prop="username" label-width="80px">
                 <el-input v-model="loginForm.username" 
                   prefix-icon="el-icon-user" 
-                  placeholder="请输入用户名" 
+                  placeholder="Enter user name " 
                   autocomplete="off" 
                 />
               </el-form-item>
-              <el-form-item label="密码" prop="password" label-width="80px">
+              <el-form-item label="Password" prop="password" label-width="80px">
                 <el-input
                   v-model="loginForm.password"
                   show-password
                   type="password"
                   prefix-icon="el-icon-lock" 
-                  placeholder="请输入密码"
+                  placeholder="Enter password"
                   autocomplete="off"
                 />
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="loginSubmitForm()"
-                  >登录</el-button
+                  >Login</el-button
                 >
                 <el-button @click="goRegister()"
-                  >去注册</el-button
+                  >Go Register</el-button
                 >
               </el-form-item>
               
@@ -71,14 +71,14 @@ export default {
     loginSubmitForm() {
     if (this.loginForm.username === '') {
       this.$message({
-            message: '用户名不能为空',
+            message: 'The username cannot be empty',
             type: 'error'
           });
       return;
     }
     if (this.loginForm.password === '') {
       this.$message({
-            message: '密码不能为空',
+            message: 'Password cannot be empty',
             type: 'error'
           });
       return;
@@ -91,7 +91,7 @@ export default {
       console.log(response.data); // 打印后端返回的字符串数据
       if (response.status === 200 & response.data !== '密码错误' & response.data !== '该用户不存在') {
         this.$message({
-            message: '登录成功',
+            message: 'Login succeeded',
             type: 'success'
           });
         localStorage.setItem("user", response.data)

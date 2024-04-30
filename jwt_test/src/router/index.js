@@ -9,6 +9,9 @@ import GPS from '@/views/GPS.vue'
 import GPS1 from '@/views/GPS1.vue'
 import Add from '@/views/Add.vue'
 import MyOrder from '@/views/MyOrder.vue'
+import Friend from '@/views/Friend.vue'
+import Profile from '@/views/Profile.vue'
+import Location from '@/views/Location.vue'
 
 Vue.use(VueRouter)
 
@@ -57,7 +60,22 @@ const routes = [
         path: 'myorder',
         name: 'myorder',
         component: MyOrder
-      }
+      },
+      {
+        path: 'friend',
+        name: 'friend',
+        component: Friend
+      },
+      {
+        path: 'profile',
+        name: 'profile',
+        component: Profile
+      },
+      {
+        path: 'location',
+        name: 'location',
+        component: Location
+      },
     ]
   },
 

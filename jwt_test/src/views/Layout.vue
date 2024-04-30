@@ -10,9 +10,11 @@
             <i class="el-icon-user el-icon--left"></i>{{ nameData }}<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button> 
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人中心</el-dropdown-item>
             <el-dropdown-item>
-              <div @click="logout()">退出登录</div>
+              <div @click="goFriend()">Follow Friends</div>
+              </el-dropdown-item>
+            <el-dropdown-item>
+              <div @click="logout()">Log out</div>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -31,30 +33,40 @@
 
         <el-menu-item index="/">
           <i class="el-icon-menu"></i>
-          <span slot="title">Home/主页</span>
+          <span slot="title">Home</span>
         </el-menu-item>
 
         <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-location"></i>
-            <span>Map/地图</span>
+            <span>Map</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="/gps">GPS</el-menu-item>
-            <el-menu-item index="/gps1">GPS1</el-menu-item>
+            <el-menu-item index="/location">Current Location</el-menu-item>
+            <el-menu-item index="/gps1">Past Location</el-menu-item>
           </el-menu-item-group>
-
         </el-submenu>
 
         <el-menu-item index="/add">
           <i class="el-icon-setting"></i>
-          <span slot="title">Payment/支付</span>
+          <span slot="title">Payment</span>
         </el-menu-item>
 
         <el-menu-item index="/myorder">
           <i class="el-icon-setting"></i>
-          <span slot="title">MyOrder/我的订单</span>
+          <span slot="title">MyOrder</span>
         </el-menu-item>
+
+        <el-menu-item index="/profile">
+          <i class="el-icon-setting"></i>
+          <span slot="title">Profile</span>
+        </el-menu-item>
+
+        <el-menu-item index="/friend">
+          <i class="el-icon-setting"></i>
+          <span slot="title">Follow Friend</span>
+        </el-menu-item>
+
       </el-menu>
       </el-aside>
       <el-main>
@@ -91,7 +103,6 @@ export default {
 
 
   methods: {
-
     fetchname() {
       this.tokenForm.token = localStorage.getItem("user");
       const params = qs.stringify(this.tokenForm);
@@ -106,7 +117,7 @@ export default {
           },
           response => {
             console.log("error");
-            alert("请求失败");
+            alert("Request failed");
             this.$router.push("/login")
           }
       );
@@ -116,6 +127,12 @@ export default {
       localStorage.removeItem("user");
       localStorage.removeItem("userid");
       this.$router.push("/login");
+    },
+
+    goFriend() {
+      if (this.$route.path !== '/friend') {
+        this.$router.push("/friend");
+      }
     }
 
   }

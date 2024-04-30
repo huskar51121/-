@@ -10,6 +10,7 @@ import com.example.service.OrderService;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/order")
 public class OrderController {
@@ -42,24 +43,27 @@ public class OrderController {
 
     // 通过订单名称获取订单
     @PostMapping("/name/{orderName}")
-    public ResponseEntity<Map<String, Object>> getOrderByOrderName(@PathVariable("orderName") String orderName) {
-        try {
-            Map<String, Object> order = orderService.getOrderByOrderName(orderName);
-            return ResponseEntity.ok(order);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<Map<String, Object>> getOrderByOrderName(int orderid) {
+        Map<String, Object> order = orderService.getOrderByOrderid(orderid);
+        return ResponseEntity.ok(order);
+    }
+
+    // 通过订单名称删除订单
+    @PostMapping("/delete")
+    public ResponseEntity<String> deletebyorderid(String orderId) {
+        System.out.println("12345678");
+        System.out.println(orderId);
+        String result = orderService.deleteByOrderid(Integer.parseInt(orderId));
+        return ResponseEntity.ok(result);
     }
 
     // 通过订单ID进行支付更新
-    @PostMapping("/pay/{orderId}")
-    public ResponseEntity<String> payOrderByOrderId(@PathVariable("orderId") int orderId) {
-        try {
-            String result = orderService.payOrderByOrderId(orderId);
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("支付失败：" + e.getMessage());
-        }
+    @PostMapping("/pay")
+    public ResponseEntity<String> payOrderByOrderId(String orderId) {
+        System.out.println("1234567");
+        System.out.println(orderId);
+        String result = orderService.payOrderByOrderId(Integer.parseInt(orderId));
+        return ResponseEntity.ok(result);
     }
 
     // 添加一个新订单

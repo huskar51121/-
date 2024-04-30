@@ -21,6 +21,7 @@ public class OrderDao {
 
     }
 
+    // the id is user's id
     public List<Map<String, Object>> getallordersbyid(int id) {
 
         String sql = "select * from `order` WHERE id LIKE \'" +
@@ -31,9 +32,9 @@ public class OrderDao {
 
     }
 
-    public Map<String, Object> getorderbyorderid(String name) {
-        String sql = "SELECT * FROM `order` WHERE name LIKE\'" +
-                name +
+    public Map<String, Object> getorderbyorderid(int orderid) {
+        String sql = "SELECT * FROM `order` WHERE orderid LIKE\'" +
+                orderid +
                 "\';";
         try {
             Map<String, Object> map = jdbcTemplate.queryForMap(sql);
@@ -65,5 +66,17 @@ public class OrderDao {
                 ");";
         jdbcTemplate.update(sql);
         return "创建成功";
+    }
+
+    public String deletebyorderid(int orderid) {
+        String sql = "DELETE FROM `order` \nWHERE orderid = \'" +
+                orderid +
+                "\';";
+        try {
+            jdbcTemplate.update(sql);
+            return "删除成功";
+        } catch (Exception e) {
+            return "删除失败";
+        }
     }
 }
