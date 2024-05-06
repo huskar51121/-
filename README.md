@@ -1,6 +1,6 @@
-# Runiverse Fitness
+# FitTrackr
 
-Welcome to **Runiverse Fitness**! This is a website designed to help you track your exercise routines and manage your fitness journey. Whether you're training for a marathon or just want to keep fit, this platform offers tools to log and analyze your workouts.
+Welcome to **FitTrackr**! This is a website designed to help you track your exercise routines and manage your fitness journey. Whether you're training for a marathon or just want to keep fit, this platform offers tools to log and analyze your workouts.
 
 ## Features
 
